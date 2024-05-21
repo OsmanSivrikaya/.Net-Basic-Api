@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 
 namespace Case.Validators
 {
@@ -11,19 +12,17 @@ namespace Case.Validators
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            // modal is valid değilse giriyor
             if (!context.ModelState.IsValid)
             {
-                var erros = context.ModelState
+                var errors = context.ModelState
                     .Where(x => x.Value.Errors.Any())
-                    //key'i ve ona karşılık gelen validation mesajlarını çekiyoruz
-                    .ToDictionary(e => e.Key, e => e.Value.Errors.Select(e => e.ErrorMessage))
-                    .ToArray();
+                    .SelectMany(x => x.Value.Errors.Select(err => err.ErrorMessage))
+                    .ToList();
 
-                context.Result = new BadRequestObjectResult(erros);
+                context.Result = new BadRequestObjectResult(errors);
                 return;
             }
-            //bir sonraki deleget'i çalıştır
+
             await next();
         }
     }

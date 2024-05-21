@@ -7,12 +7,6 @@ namespace Case.Validators.Demands
     {
         public CreateDemandValidator()
         {
-            RuleFor(p => p.UserName)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Boş geçilemez")
-                .MaximumLength(254)
-                .WithMessage("254 Karakterden uzun olamaz");
             RuleFor(p => p.Complaint)
                .NotEmpty()
                .NotNull()

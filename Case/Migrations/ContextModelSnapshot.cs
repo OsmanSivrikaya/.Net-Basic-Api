@@ -39,11 +39,6 @@ namespace Case.Migrations
                         .HasColumnType("nvarchar(254)")
                         .HasColumnName("name");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(254)")
-                        .HasColumnName("useer_name");
-
                     b.HasKey("Id");
 
                     b.ToTable("Demand");

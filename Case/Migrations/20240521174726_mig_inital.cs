@@ -16,7 +16,6 @@ namespace Case.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    useer_name = table.Column<string>(type: "nvarchar(254)", nullable: false),
                     complaint = table.Column<string>(type: "nvarchar(4000)", nullable: false),
                     name = table.Column<string>(type: "nvarchar(254)", nullable: false)
                 },

@@ -6,5 +6,6 @@ namespace Case.Services.Interface
     {
         Task CreateAsyncDemand(DemandCreateDto demandCreateDto);
         Task<List<DemandOptionDto>> GetDemandOption();
+        Task<TableDto<DemandTableDto>> GetAllDemands(int start, int length, int draw);
     }
 }

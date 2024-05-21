@@ -4,6 +4,7 @@ using Case.Entity;
 using Case.Helper.Api;
 using Case.Repository.Interface;
 using Case.Services.Interface;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Case.Services
@@ -53,6 +54,37 @@ namespace Case.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<TableDto<DemandTableDto>> GetAllDemands(int start, int length, int draw)
+        {
+            try
+            {
+                var demandOptions = await GetDemandOption();
+                var totalDemands = await _demandRepository.GetAll().CountAsync();
+
+                var result = await _demandRepository
+                    .GetAll()
+                    .Skip(start)
+                    .Take(length)
+                    .ToListAsync();
+
+                var innerJoinQuery =
+                from demands in result
+                join options in demandOptions on demands.Name equals options.Name
+                select new DemandTableDto { 
+                    Body = options.Body,
+                    Complaint = demands.Complaint,
+                    Email = options.EMail,
+                    Name = demands.Name
+                };
+                // Verileri JSON olarak döndür
+                return new TableDto<DemandTableDto>{ Data = innerJoinQuery.ToList(), RecordsTotal = totalDemands, Draw = draw, RecordsFiltered = totalDemands };
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

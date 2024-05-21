@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Case.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240520194339_mig_inital")]
+    [Migration("20240521174726_mig_inital")]
     partial class mig_inital
     {
         /// <inheritdoc />
@@ -41,11 +41,6 @@ namespace Case.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(254)")
                         .HasColumnName("name");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(254)")
-                        .HasColumnName("useer_name");
 
                     b.HasKey("Id");
 
